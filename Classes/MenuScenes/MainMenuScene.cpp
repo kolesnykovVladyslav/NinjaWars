@@ -25,6 +25,7 @@
 #include "MainMenuScene.h"
 #include "SinglePlayerMenuScene.h"
 #include "Definitions.h"
+#include <SimpleAudioEngine.h>
 
 USING_NS_CC;
 
@@ -65,6 +66,12 @@ bool MainMenuScene::init()
     menu->setPosition(Point::ZERO);
     this->addChild(menu);
    
+    //audio
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    if (!audio->isBackgroundMusicPlaying()) {
+        audio->preloadBackgroundMusic("Sounds/menu.mp3");
+        audio->playBackgroundMusic("Sounds/menu.mp3");
+    }
     return true;
 }
 

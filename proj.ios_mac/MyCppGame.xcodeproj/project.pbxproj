@@ -78,6 +78,8 @@
 		B7E399DE210F44DA00B9325D /* Defeat.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E399DA210F44DA00B9325D /* Defeat.png */; };
 		B7E399E1210F6E9A00B9325D /* PauseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7E399E0210F6E9900B9325D /* PauseScene.cpp */; };
 		B7E399E2210F6E9A00B9325D /* PauseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7E399E0210F6E9900B9325D /* PauseScene.cpp */; };
+		B7E399E6210FA6D500B9325D /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = B7E399E4210FA6D500B9325D /* Sounds */; };
+		B7E399E7210FA6D500B9325D /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = B7E399E4210FA6D500B9325D /* Sounds */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -190,6 +192,7 @@
 		B7E399DA210F44DA00B9325D /* Defeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Defeat.png; sourceTree = "<group>"; };
 		B7E399DF210F6E9900B9325D /* PauseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseScene.h; sourceTree = "<group>"; };
 		B7E399E0210F6E9900B9325D /* PauseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PauseScene.cpp; sourceTree = "<group>"; };
+		B7E399E4210FA6D500B9325D /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -332,6 +335,7 @@
 				B7D99C2D210B68BA00C2BCE4 /* Ninja.png */,
 				B7171BDE210A3D2F00EF4E80 /* MenuBG.png */,
 				B7171BDB210A355D00EF4E80 /* SplashScene.png */,
+				B7E399E4210FA6D500B9325D /* Sounds */,
 				B7CB46CF210E840300D41ECB /* DesertMap */,
 				B7CB46CC210E7B8900D41ECB /* CemeteryMap */,
 				B709077E210D08460057E5CA /* Ninja */,
@@ -534,6 +538,7 @@
 				1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */,
 				B7171C10210A8D8500EF4E80 /* ForestMap in Resources */,
 				B7E399DB210F44DA00B9325D /* Victory.png in Resources */,
+				B7E399E6210FA6D500B9325D /* Sounds in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +546,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7E399E7210FA6D500B9325D /* Sounds in Resources */,
 				B7E399DC210F44DA00B9325D /* Victory.png in Resources */,
 				B7CB46C8210DE1AF00D41ECB /* Kunai.png in Resources */,
 				B7090780210D08460057E5CA /* Ninja in Resources */,

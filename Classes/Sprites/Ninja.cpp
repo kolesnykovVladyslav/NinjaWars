@@ -26,9 +26,11 @@
 #include "Definitions.h"
 #include "AnimationManager.h"
 #include "Kunai.h"
+#include <SimpleAudioEngine.h>
 
 USING_NS_CC;
 
+auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
 
 Ninja::Ninja(cocos2d::Layer *layer, cocos2d::Vec2 position, NINJA_CONTROL ninjaControl)
 {
@@ -79,6 +81,12 @@ Ninja::Ninja(cocos2d::Layer *layer, cocos2d::Vec2 position, NINJA_CONTROL ninjaC
     dead = false;
     hpLine = DrawNode::create();
     ninjaSprite->addChild(hpLine);
+    
+    //audio
+    audio->preloadEffect("Sounds/throw.mp3");
+    audio->preloadEffect("Sounds/hit.mp3");
+    audio->preloadEffect("Sounds/death.mp3");
+    audio->preloadEffect("Sounds/jump.mp3");
 }
 
 void Ninja::run(float velocity)
@@ -126,6 +134,7 @@ void Ninja::jump()
             setAnimation(jumpFrames, ONE, false);
         }
     }
+    audio->playEffect("Sounds/jump.mp3");
 }
 
 void Ninja::throwKunai(float force)
@@ -140,7 +149,11 @@ void Ninja::throwKunai(float force)
         setAnimation(throwFrames, ONE, false);
     }
     auto kunaiVelocity = Vec2(i * cos(throwProperties.angle* M_PI / 180) * force, sin(throwProperties.angle* M_PI / 180) * force);
-    Kunai *kunai = new Kunai(layer, throwProperties.aimPosition, kunaiVelocity);
+    new Kunai(layer, throwProperties.aimPosition, kunaiVelocity);
+    
+    //sound
+    audio->playEffect("Sounds/throw.mp3");
+    
 }
 
 void Ninja::setAnimation(cocos2d::Vector<cocos2d::SpriteFrame*> frames, RepeatTimes repeatTimes, bool flipped)
@@ -162,8 +175,8 @@ void Ninja::setAnimation(cocos2d::Vector<cocos2d::SpriteFrame*> frames, RepeatTi
 }
 
 void Ninja::applyDamageFrom(cocos2d::PhysicsBody *body) {
+    audio->playEffect("Sounds/hit.mp3");
     float damage = sqrt(body->getVelocity().x * body->getVelocity().x + body->getVelocity().y * body->getVelocity().y);
-    
     hp -= damage;
     if (hp < 0 && !dead) {
         die();
@@ -181,6 +194,7 @@ void Ninja::die()
     } else {
         setAnimation(deadFrames, ONE, false);
     }
+    audio->playEffect("Sounds/death.mp3");
 }
 
 void Ninja::drawHpLine()

@@ -26,6 +26,7 @@
 #include "MainMenuScene.h"
 #include "GameScene.h"
 #include "Definitions.h"
+#include <SimpleAudioEngine.h>
 
 USING_NS_CC;
 
@@ -82,6 +83,17 @@ bool GameOverScene::init()
     auto menu = Menu::create(retryItem, menuItem, NULL);
     menu->setPosition(Point::ZERO);
     this->addChild(menu);
+    
+    //sound
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    if(gameResult == VICTORY) {
+        audio->preloadEffect("Sounds/win.mp3");
+        audio->playEffect("Sounds/win.mp3");
+    } else {
+        audio->preloadEffect("Sounds/lose.mp3");
+        audio->playEffect("Sounds/lose.mp3");
+    }
+    audio->resumeBackgroundMusic();
     
     return true;
 }

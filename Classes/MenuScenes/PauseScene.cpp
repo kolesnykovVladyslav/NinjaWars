@@ -26,6 +26,7 @@
 #include "MainMenuScene.h"
 #include "GameScene.h"
 #include "Definitions.h"
+#include <SimpleAudioEngine.h>
 
 USING_NS_CC;
 
@@ -72,6 +73,10 @@ bool PauseScene::init()
     menu->setPosition(Point::ZERO);
     this->addChild(menu);
     
+    //sound
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    audio->resumeBackgroundMusic();
+    
     return true;
 }
 
@@ -83,5 +88,7 @@ void PauseScene::goToMainMenuScene(cocos2d::Ref *sender)
 
 void PauseScene::goToGameScene(cocos2d::Ref *sender)
 {
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    audio->pauseBackgroundMusic();
     Director::getInstance()->popScene();
 }

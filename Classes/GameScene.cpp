@@ -28,6 +28,7 @@
 #include "Definitions.h"
 #include "Ninja.h"
 #include "Kunai.h"
+#include <SimpleAudioEngine.h>
 
 USING_NS_CC;
 
@@ -141,6 +142,12 @@ bool GameScene::init()
     this->addChild(labelTime,1);
     
     this->scheduleUpdate();
+    
+    //sound
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    if (audio->isBackgroundMusicPlaying()) {
+        audio->pauseBackgroundMusic();
+    }
     
     return true;
 }
