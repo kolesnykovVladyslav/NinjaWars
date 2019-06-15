@@ -29,6 +29,7 @@
 #include "Ninja.h"
 #include "Kunai.h"
 #include <SimpleAudioEngine.h>
+#include <ui/CocosGUI.h>
 
 USING_NS_CC;
 
@@ -67,7 +68,7 @@ bool GameScene::init()
         return false;
     }
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
+    visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     
@@ -106,8 +107,9 @@ bool GameScene::init()
     
     //load spawn
     auto respawnObjects = map->getObjectGroup("respawn")->getObjects();
-    playerNinja = respawnNinja(respawnObjects.back(), PLAYER);
-    respawnObjects.pop_back();
+    int index = rand() % respawnObjects.size();
+    playerNinja = respawnNinja(respawnObjects.at(index), PLAYER);
+    respawnObjects.erase(respawnObjects.begin() + index);
     for (auto obj : respawnObjects) {
         Ninja *ninja = respawnNinja(obj, BOT);
         enemies.push_back(ninja);
@@ -148,6 +150,11 @@ bool GameScene::init()
     if (audio->isBackgroundMusicPlaying()) {
         audio->pauseBackgroundMusic();
     }
+    
+    //touchscreen
+    #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        loadTouchButtons();
+    #endif
     
     return true;
 }
@@ -269,4 +276,154 @@ void GameScene::goToGameOverScene(cocos2d::Ref *sender, GAME_RESULT result)
 {
     auto scene = GameOverScene::createScene(currentLevel, result);
     Director::getInstance()->replaceScene(TransitionFade::create(TRASNSITION_TIME, scene));
+}
+
+void GameScene::loadTouchButtons()
+{
+    ui::Button *leftButton = ui::Button::create("Buttons/leftButton.png", "Buttons/leftPressedButton.png");
+    leftButton->setScale(BUTTONSIZE/leftButton->getContentSize().width);
+    leftButton->setPosition(Vec2(BUTTONSIZE / 2 , BUTTONSIZE / 2));
+    this->addChild(leftButton);
+    leftButton->addTouchEventListener(
+                                      [this](Ref *sender, ui::Widget::TouchEventType type) {
+                                          switch (type) {
+                                              case ui::Widget::TouchEventType::BEGAN:
+                                                  playerNinja->run(-NINJA_VELOCITY);
+                                                  break;
+                                              case ui::Widget::TouchEventType::ENDED:
+                                                  playerNinja->stand();
+                                                  break;
+                                              case ui::Widget::TouchEventType::CANCELED:
+                                                  playerNinja->stand();
+                                                  break;
+                                              default:
+                                                  break;
+                                          }
+                                      }
+                                      );
+    
+    ui::Button *rightButton = ui::Button::create("Buttons/rightButton.png", "Buttons/rightPressedButton.png");
+    rightButton->setScale(BUTTONSIZE/rightButton->getContentSize().width);
+    rightButton->setPosition(Vec2(BUTTONSIZE * 2, BUTTONSIZE / 2 ));
+    this->addChild(rightButton);
+    rightButton->addTouchEventListener(
+                                       [this](Ref *sender, ui::Widget::TouchEventType type) {
+                                           switch (type) {
+                                               case ui::Widget::TouchEventType::BEGAN:
+                                                   playerNinja->run(NINJA_VELOCITY);
+                                                   break;
+                                               case ui::Widget::TouchEventType::ENDED:
+                                                   playerNinja->stand();
+                                                   break;
+                                               case ui::Widget::TouchEventType::CANCELED:
+                                                   playerNinja->stand();
+                                                   break;
+                                               default:
+                                                   break;
+                                           }
+                                       }
+                                       );
+    
+    ui::Button *pauseButton = ui::Button::create("Buttons/pauseButton.png", "Buttons/pausePressedButton.png");
+    pauseButton->setScale(BUTTONSIZE/pauseButton->getContentSize().width);
+    pauseButton->setPosition(Vec2(BUTTONSIZE/1.5, visibleSize.height - BUTTONSIZE/1.5));
+    this->addChild(pauseButton);
+    pauseButton->addTouchEventListener(
+                                       [](Ref *sender, ui::Widget::TouchEventType type) {
+                                           switch (type) {
+                                               case ui::Widget::TouchEventType::BEGAN: {
+                                                   Scene* scene = PauseScene::createScene();
+                                                   Director::getInstance()->pushScene(TransitionFade::create(TRASNSITION_TIME, scene));
+                                                   break;
+                                               }
+                                               default:
+                                                   break;
+                                           }
+                                       }
+                                       );
+    
+    ui::Button *jumpButton = ui::Button::create("Buttons/jumpButton.png", "Buttons/jumpPressedButton.png");
+    jumpButton->setScale(BUTTONSIZE/jumpButton->getContentSize().width);
+    jumpButton->setPosition(Vec2(BUTTONSIZE * 1.25, BUTTONSIZE * 1.5));
+    this->addChild(jumpButton);
+    jumpButton->addTouchEventListener(
+                                      [this](Ref *sender, ui::Widget::TouchEventType type) {
+                                          switch (type) {
+                                              case ui::Widget::TouchEventType::BEGAN:
+                                                  playerNinja->jump();
+                                                  break;
+                                              default:
+                                                  break;
+                                          }
+                                      }
+                                      );
+    
+    ui::Button *throwButton = ui::Button::create("Buttons/throwButton.png", "Buttons/throwPressedButton.png");
+    throwButton->setScale(BUTTONSIZE/throwButton->getContentSize().width);
+    throwButton->setPosition(Vec2(visibleSize.width - BUTTONSIZE/2, BUTTONSIZE));
+    this->addChild(throwButton);
+    throwButton->addTouchEventListener(
+                                       [this](Ref *sender, ui::Widget::TouchEventType type) {
+                                           switch (type) {
+                                               case ui::Widget::TouchEventType::BEGAN:
+                                                   keyPressedTime = std::chrono::high_resolution_clock::now();
+                                                   break;
+                                               case ui::Widget::TouchEventType::ENDED: {
+                                                   float duration = std::chrono::duration_cast<std::chrono::milliseconds>
+                                                   (std::chrono::high_resolution_clock::now() - keyPressedTime).count();
+                                                   playerNinja->throwKunai(MIN(duration, MAX_THROW_POWER));
+                                                   break;
+                                               }
+                                               case ui::Widget::TouchEventType::CANCELED:
+                                                   playerNinja->stand();
+                                                   break;
+                                               default:
+                                                   break;
+                                           }
+                                       }
+                                       );
+    
+    ui::Button *aimButtonUpButton = ui::Button::create("Buttons/jumpButton.png", "Buttons/jumpPressedButton.png");
+    aimButtonUpButton->setScale(BUTTONSIZE/aimButtonUpButton->getContentSize().width);
+    aimButtonUpButton->setPosition(Vec2(visibleSize.width - BUTTONSIZE * 1.5, BUTTONSIZE * 1.5));
+    this->addChild(aimButtonUpButton);
+    aimButtonUpButton->addTouchEventListener(
+                                      [this](Ref *sender, ui::Widget::TouchEventType type) {
+                                          switch (type) {
+                                              case ui::Widget::TouchEventType::BEGAN:
+                                                  playerNinja->setAimSpeed(AIM_ANGLE_SPEED);
+                                                  break;
+                                              case ui::Widget::TouchEventType::ENDED:
+                                                  playerNinja->setAimSpeed(0);
+                                                  break;
+                                              case ui::Widget::TouchEventType::CANCELED:
+                                                playerNinja->setAimSpeed(0);
+                                                  break;
+                                              default:
+                                                  break;
+                                          }
+                                      }
+                                      );
+    
+    ui::Button *aimButtonDownButton = ui::Button::create("Buttons/downButton.png", "Buttons/downPressedButton.png");
+    aimButtonDownButton->setScale(BUTTONSIZE/aimButtonDownButton->getContentSize().width);
+    aimButtonDownButton->setPosition(Vec2(visibleSize.width - BUTTONSIZE * 1.5, BUTTONSIZE /2));
+    this->addChild(aimButtonDownButton);
+    aimButtonDownButton->addTouchEventListener(
+                                             [this](Ref *sender, ui::Widget::TouchEventType type) {
+                                                 switch (type) {
+                                                     case ui::Widget::TouchEventType::BEGAN:
+                                                         playerNinja->setAimSpeed(-AIM_ANGLE_SPEED);
+                                                         break;
+                                                     case ui::Widget::TouchEventType::ENDED:
+                                                         playerNinja->setAimSpeed(0);
+                                                         break;
+                                                     case ui::Widget::TouchEventType::CANCELED:
+                                                         playerNinja->setAimSpeed(0);
+                                                         break;
+                                                     default:
+                                                         break;
+                                                 }
+                                             }
+                                             );
 }

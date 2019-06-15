@@ -26,6 +26,8 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
+#include "extensions/cocos-ext.h"
 #include "Definitions.h"
 #include "Ninja.h"
 
@@ -41,6 +43,7 @@ public:
     
     cocos2d::Vector<cocos2d::SpriteFrame*> getAnimation(const char *format, int count);
 private:
+    cocos2d::Size visibleSize;
     void setPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world;};
     cocos2d::PhysicsWorld *sceneWorld;
     cocos2d::Layer *collisionLayer;
@@ -60,6 +63,8 @@ private:
     void update(float dt);
     
     void goToGameOverScene(cocos2d::Ref *sender, GAME_RESULT result);
+    
+    void loadTouchButtons();
 };
 
 #endif // __GAME_SCENE_H__

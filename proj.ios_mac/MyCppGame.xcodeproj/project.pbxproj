@@ -42,6 +42,8 @@
 		B709077D210D068A0057E5CA /* AnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B709077B210D068A0057E5CA /* AnimationManager.cpp */; };
 		B709077F210D08460057E5CA /* Ninja in Resources */ = {isa = PBXBuildFile; fileRef = B709077E210D08460057E5CA /* Ninja */; };
 		B7090780210D08460057E5CA /* Ninja in Resources */ = {isa = PBXBuildFile; fileRef = B709077E210D08460057E5CA /* Ninja */; };
+		B714C0342115EA22000272B1 /* Buttons in Resources */ = {isa = PBXBuildFile; fileRef = B714C0322115EA22000272B1 /* Buttons */; };
+		B714C0352115EA22000272B1 /* Buttons in Resources */ = {isa = PBXBuildFile; fileRef = B714C0322115EA22000272B1 /* Buttons */; };
 		B7171BCC210A29BA00EF4E80 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7171BCB210A29B900EF4E80 /* GameScene.cpp */; };
 		B7171BCD210A29BA00EF4E80 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7171BCB210A29B900EF4E80 /* GameScene.cpp */; };
 		B7171BD4210A2C8A00EF4E80 /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7171BD3210A2C8A00EF4E80 /* GameOverScene.cpp */; };
@@ -165,6 +167,7 @@
 		B709077A210D06890057E5CA /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
 		B709077B210D068A0057E5CA /* AnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationManager.cpp; sourceTree = "<group>"; };
 		B709077E210D08460057E5CA /* Ninja */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Ninja; sourceTree = "<group>"; };
+		B714C0322115EA22000272B1 /* Buttons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Buttons; sourceTree = "<group>"; };
 		B7171BCA210A29B900EF4E80 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		B7171BCB210A29B900EF4E80 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		B7171BD2210A2C8A00EF4E80 /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
@@ -335,6 +338,7 @@
 				B7D99C2D210B68BA00C2BCE4 /* Ninja.png */,
 				B7171BDE210A3D2F00EF4E80 /* MenuBG.png */,
 				B7171BDB210A355D00EF4E80 /* SplashScene.png */,
+				B714C0322115EA22000272B1 /* Buttons */,
 				B7E399E4210FA6D500B9325D /* Sounds */,
 				B7CB46CF210E840300D41ECB /* DesertMap */,
 				B7CB46CC210E7B8900D41ECB /* CemeteryMap */,
@@ -528,6 +532,7 @@
 				B7CB46C5210DE1AF00D41ECB /* aim.png in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				B7171BDF210A3D2F00EF4E80 /* MenuBG.png in Resources */,
+				B714C0342115EA22000272B1 /* Buttons in Resources */,
 				B7E399DD210F44DA00B9325D /* Defeat.png in Resources */,
 				B7CB46D0210E840300D41ECB /* DesertMap in Resources */,
 				B7171BDC210A355D00EF4E80 /* SplashScene.png in Resources */,
@@ -552,6 +557,7 @@
 				B7090780210D08460057E5CA /* Ninja in Resources */,
 				B7CB46D1210E840300D41ECB /* DesertMap in Resources */,
 				B7171C11210A8D8500EF4E80 /* ForestMap in Resources */,
+				B714C0352115EA22000272B1 /* Buttons in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
