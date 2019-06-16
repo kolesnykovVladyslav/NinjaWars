@@ -200,15 +200,17 @@ void Ninja::die()
 void Ninja::drawHpLine()
 {
     hpLine->clear();
-    float damage = (NINJA_MAX_HP - hp)/NINJA_MAX_HP * contentSize.width;
+    if (isDead()) { return; }
+    float hpPercentage = hp / NINJA_MAX_HP;
+    float hpLineWidth = hpPercentage * contentSize.width;
     Vec2 vertices[] =
     {
         Vec2(0,contentSize.height+15),
-        Vec2(MAX(contentSize.width - damage, 0),contentSize.height+15),
-        Vec2(MAX(contentSize.width - damage, 0),contentSize.height),
+        Vec2(MAX(hpLineWidth, 0),contentSize.height+15),
+        Vec2(MAX(hpLineWidth, 0),contentSize.height),
         Vec2(0,contentSize.height)
     };
-    hpLine->drawPolygon(vertices, 4, Color4F(0.0f,1.0f,0.0f,1), 3, Color4F(0.2f,0.2f,0.2f,1));
+    hpLine->drawPolygon(vertices, 4, Color4F(1 - hpPercentage, hpPercentage,0.0f,1), 3, Color4F(0.2f,0.2f,0.2f,1));
 }
 
 void Ninja::update(float dt) {
