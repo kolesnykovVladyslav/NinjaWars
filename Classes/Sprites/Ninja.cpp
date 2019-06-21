@@ -81,6 +81,7 @@ Ninja::Ninja(cocos2d::Layer *layer, cocos2d::Vec2 position, NINJA_CONTROL ninjaC
     dead = false;
     hpLine = DrawNode::create();
     ninjaSprite->addChild(hpLine);
+    drawHpLine();
     
     //audio
     audio->preloadEffect("Sounds/throw.mp3");
@@ -91,7 +92,7 @@ Ninja::Ninja(cocos2d::Layer *layer, cocos2d::Vec2 position, NINJA_CONTROL ninjaC
 
 void Ninja::run(float velocity)
 {
-    if(dead) {return;}
+    if(isDead()) {return;}
     auto curVelocity = ninjaBody->getVelocity();
     auto newVelocity = Vec2(velocity, curVelocity.y);
     ninjaBody->setVelocity(newVelocity);
@@ -106,7 +107,7 @@ void Ninja::run(float velocity)
 
 void Ninja::stand()
 {
-    if(dead) {return;}
+    if(isDead()) {return;}
     auto curVelocity = ninjaBody->getVelocity();
     auto newVelocity = Vec2(0, curVelocity.y);
     ninjaBody->setVelocity(newVelocity);
@@ -121,7 +122,7 @@ void Ninja::stand()
 
 void Ninja::jump()
 {
-    if(dead) {return;}
+    if(isDead()) {return;}
     if(ninjaBody->getVelocity().y < 0.1 && ninjaBody->getVelocity().y > -0.1) {
         ninjaSprite->stopAllActions();
         Vec2 force = Vec2(0, NINJA_JUMP_FORCE);
@@ -139,7 +140,7 @@ void Ninja::jump()
 
 void Ninja::throwKunai(float force)
 {
-    if(dead) {return;}
+    if(isDead()) {return;}
     auto ninjaPos = ninjaSprite->getPosition();
     ninjaSprite->stopAllActions();
     int i = ninjaSprite->isFlipX()? -1 : 1;
@@ -178,6 +179,7 @@ void Ninja::applyDamageFrom(cocos2d::PhysicsBody *body) {
     audio->playEffect("Sounds/hit.mp3");
     float damage = sqrt(body->getVelocity().x * body->getVelocity().x + body->getVelocity().y * body->getVelocity().y);
     hp -= damage;
+    drawHpLine();
     if (hp < 0 && !dead) {
         die();
     }
@@ -185,9 +187,10 @@ void Ninja::applyDamageFrom(cocos2d::PhysicsBody *body) {
 
 void Ninja::die()
 {
-    ninjaSprite->stopAllActions();
+    if(isDead()) {return;}
     hp = 0;
     dead = true;
+    ninjaSprite->stopAllActions();
     int i = ninjaSprite->isFlipX()? -1 : 1;
     if(ninjaSprite->isFlipX()) {
         setAnimation(deadFrames, ONE, true);
@@ -195,12 +198,13 @@ void Ninja::die()
         setAnimation(deadFrames, ONE, false);
     }
     audio->playEffect("Sounds/death.mp3");
+    drawHpLine();
 }
 
 void Ninja::drawHpLine()
 {
     hpLine->clear();
-    if (isDead()) { return; }
+    if(isDead()) {return;}
     float hpPercentage = hp / NINJA_MAX_HP;
     float hpLineWidth = hpPercentage * contentSize.width;
     Vec2 vertices[] =
@@ -214,7 +218,6 @@ void Ninja::drawHpLine()
 }
 
 void Ninja::update(float dt) {
-    drawHpLine();
     //Aim movement
     if (this->ninjaControl == BOT) { return; }
     auto ninjaPosition = ninjaSprite->getPosition();
