@@ -56,20 +56,11 @@ Ninja::Ninja(cocos2d::Layer *layer, cocos2d::Vec2 position, NINJA_CONTROL ninjaC
     ninjaSprite->setPosition(position);
     ninjaSprite->setUserObject(this);
     
-    //create PhysicsBody
-    contentSize = ninjaSprite->getContentSize();
-    ninjaBody = PhysicsBody::createBox(contentSize,PhysicsMaterial(1000.0f, 0.0f, 0.0f));
-    ninjaBody->setDynamic(true);
-    ninjaBody->setMass(NINJA_MASS);
-    ninjaBody->setRotationEnable(false);
-    ninjaBody->setCollisionBitmask(NINJA_COLLISION_BITMASK);
-    ninjaBody->setContactTestBitmask(true);
-    ninjaSprite->setPhysicsBody(ninjaBody);
+    createPhysicsBody();
     layer->addChild(ninjaSprite, 100);
-    
     setAnimation(idleFrames, FOREVER, false);
-    
     this->ninjaControl = ninjaControl;
+    
     //load aim
     throwProperties.angle = 0;
     throwProperties.angleSpeed = 0;
@@ -88,6 +79,17 @@ Ninja::Ninja(cocos2d::Layer *layer, cocos2d::Vec2 position, NINJA_CONTROL ninjaC
     audio->preloadEffect("Sounds/hit.mp3");
     audio->preloadEffect("Sounds/death.mp3");
     audio->preloadEffect("Sounds/jump.mp3");
+}
+
+void Ninja::createPhysicsBody() {
+    contentSize = ninjaSprite->getContentSize();
+    ninjaBody = PhysicsBody::createBox(contentSize,PhysicsMaterial(100.0f, 0.1f, 0.1f));
+    ninjaBody->setDynamic(true);
+    ninjaBody->setMass(NINJA_MASS);
+    ninjaBody->setRotationEnable(false);
+    ninjaBody->setCollisionBitmask(NINJA_COLLISION_BITMASK);
+    ninjaBody->setContactTestBitmask(true);
+    ninjaSprite->setPhysicsBody(ninjaBody);
 }
 
 void Ninja::run(float velocity)

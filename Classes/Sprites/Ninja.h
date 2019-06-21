@@ -40,6 +40,7 @@ class Ninja : cocos2d::Ref
 {
 public:
     Ninja(cocos2d::Layer *layer, cocos2d::Vec2 position, NINJA_CONTROL ninjaControl);
+    void createPhysicsBody();
     void run(float velocity);
     void stand();
     void jump();

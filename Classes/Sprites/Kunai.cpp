@@ -39,7 +39,7 @@ Kunai::Kunai(cocos2d::Layer *layer, cocos2d::Vec2 position, cocos2d::Vec2 veloci
     kunaiSprite->setPosition(position);
     kunaiSprite->setUserObject(this);
     
-    kunaiBody = PhysicsBody::createBox(kunaiSprite->getContentSize(),PhysicsMaterial(10.0f, 0.1f, 0.0f));
+    kunaiBody = PhysicsBody::createBox(kunaiSprite->getContentSize(),PHYSICSBODY_MATERIAL_DEFAULT);
     kunaiBody->setDynamic(true);
     kunaiBody->setMass(KUNAI_MASS);
     kunaiBody->setCollisionBitmask(KUNAI_COLLISION_BITMASK);
